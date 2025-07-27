@@ -3,6 +3,7 @@ const btn=document.querySelector(".btn-search");
 const mList=document.querySelector(".moviesList");
 async function movie(){
     try{
+        mList.innerHTML="";
         const MovieName=input.value.trim().toLowerCase();
         const response=await fetch(`http://www.omdbapi.com/?s=${MovieName}&apikey=cbb546d7`);//t=moviename u ge exact movie details but s= u get the list of names
         if(!response.ok){
@@ -12,28 +13,28 @@ async function movie(){
         console.log(data);
         lenItems=data.Search.length;
         console.log(lenItems);//got the no of results
-        mList.style.cssText="display:flex; gap:20px; border:5px solid black; flex-wrap:wrap; padding:20px;";
+        mList.style.cssText="display:flex; gap:20px;flex-wrap:wrap; padding:20px;";//wrap to allow movies to fill many lines instead of all in one
         for(let i=0;i<lenItems;i++){
             const poster=document.createElement("div");
-            poster.style.cssText="border:5px solid black;position:relative;height:250px; width:250px; display:flex; flex-direction:column; gap:20px; align-items:center; justify-content:center;";
-            const h2=document.createElement("h2");
-            h2.style.cssText="position:absolute;z-index:2000; top:200px;";//to ensure h2 is on top of poster and visible
-            const h3=document.createElement("h3");
-            h3.style.cssText="position:absolute;z-index:2000;top:200px;";//to ensure h3 is on top of poster and visible
+            poster.style.cssText="position:relative;height:300px; width:250px; display:flex; flex-direction:column; gap:20px; align-items:center; justify-content:center;";
+            const mvname=document.createElement("div");
+            mvname.style.cssText="position:absolute;z-index:2000;top:260px;left:10px; width:190px;";//to ensure h2 is on top of poster and visible
+            const year=document.createElement("div");
+            year.style.cssText="position:absolute;z-index:2000;top:260px;left:200px;";//to ensure h3 is on top of poster and visible
             const MoviePoster=document.createElement("img");//now take img from api into mvimg.src="";
             const img=data.Search[i].Poster;
             MoviePoster.src=img;
-            MoviePoster.style.cssText="position:absolute; height:250px; width:250px; z-index:1;";//no need for name its already there in movie
-            const type=data.Search[i].Type;
-            h2.textContent=type;
+            MoviePoster.style.cssText="position:absolute; top:0;height:250px; width:250px; z-index:1;";//no need for name its already there in movie
+            const title=data.Search[i].Title;
+            mvname.textContent=title;
             const yr=data.Search[i].Year;
-            h3.textContent=yr;
+            year.textContent=yr;
             //now my aim is to put movie type and yr inline so use span
             const spans=document.createElement("span");
 
             poster.appendChild(MoviePoster);
-            spans.appendChild(h2);
-            spans.appendChild(h3);
+            spans.appendChild(mvname);
+            spans.appendChild(year);
             poster.appendChild(spans);
             mList.appendChild(poster);
         }
