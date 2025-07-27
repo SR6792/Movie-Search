@@ -5,7 +5,7 @@ async function movie(){
     try{
         mList.innerHTML="";
         const MovieName=input.value.trim().toLowerCase();
-        const response=await fetch(`http://www.omdbapi.com/?s=${MovieName}&apikey=cbb546d7`);//t=moviename u ge exact movie details but s= u get the list of names
+        const response=await fetch(`https://www.omdbapi.com/?s=${MovieName}&apikey=cbb546d7`);//t=moviename u ge exact movie details but s= u get the list of names
         if(!response.ok){
             throw new Error("Couldnt find the movie You were looking for");
         }
