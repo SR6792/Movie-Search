@@ -23,15 +23,15 @@ async function movie(){
         mList.style.cssText="display:flex; gap:20px;flex-wrap:wrap; padding:20px;";//wrap to allow movies to fill many lines instead of all in one
         for(let i=0;i<lenItems;i++){
             const poster=document.createElement("div");
-            poster.style.cssText="position:relative;height:300px; width:250px; display:flex; flex-direction:column; gap:20px; align-items:center; justify-content:center;";
+            poster.style.cssText="position:relative;height:300px; width:200px; display:flex; background:black;flex-direction:column; gap:20px; align-items:center; justify-content:center;";
             const mvname=document.createElement("div");
-            mvname.style.cssText="position:absolute;z-index:2000;top:260px;left:10px; width:190px;";//to ensure h2 is on top of poster and visible
+            mvname.style.cssText="position:absolute;z-index:2000;top:260px;left:10px; width:160px;";//to ensure h2 is on top of poster and visible
             const year=document.createElement("div");
-            year.style.cssText="position:absolute;z-index:2000;top:260px;left:200px;";//to ensure h3 is on top of poster and visible
+            year.style.cssText="position:absolute;z-index:2000;top:260px;left:160px;";//to ensure h3 is on top of poster and visible
             const MoviePoster=document.createElement("img");//now take img from api into mvimg.src="";
             const img=data.Search[i].Poster;
             MoviePoster.src=img;
-            MoviePoster.style.cssText="position:absolute; top:0;height:250px; width:250px; z-index:1;";//no need for name its already there in movie
+            MoviePoster.style.cssText="position:absolute; top:0;height:250px; width:200px; z-index:1;";//no need for name its already there in movie
             const title=data.Search[i].Title;
             mvname.textContent=title;
             const yr=data.Search[i].Year;
@@ -44,7 +44,39 @@ async function movie(){
             spans.appendChild(year);
             poster.appendChild(spans);
             mList.appendChild(poster);
+            poster.addEventListener("mouseenter",hover);
+            poster.addEventListener("mouseleave",unhover);
+            //both hover and unhover done
+            function hover(){
+                const mv=data.Search[i].Title;
+                moreD(poster,mv);
+            }
+            function unhover(){
+                const details=poster.querySelector(".details")
+                if(details) details.remove();//removes entire plot etc
+            }
         }
+        //create a async function to get more details on movies on hover
+        async function moreD(post,title){//instead of poster its post
+            try{
+                //before doing the function dont foreget to check if i have already hovered so as to not append
+                if(post.querySelector(".details")) return;//prevents appending checks if i have already hovered
+                const response2=await fetch(`https://www.omdbapi.com/?t=${title}&apikey=cbb546d7`);
+                const moreData=await response2.json();
+                if(!moreData.Plot) return;//check if plot is thwere else reutnrs
+                const mdetails=document.createElement("div");
+                mdetails.classList.add("details");//gives class name to mdetails
+                const plot=document.createElement("div");
+                plot.textContent=moreData.Plot;
+                mdetails.appendChild(plot);
+                mdetails.style.cssText="position:absolute;z-index:2000;top:300px; background:black;";
+                post.appendChild(mdetails);
+            }
+            catch(e){
+                console.error(e);
+            }
+        }
+
     }
     catch(e){
         console.error(e);
@@ -57,3 +89,5 @@ input.addEventListener("keydown",(e)=>{
         movie();
     }
 });
+
+
