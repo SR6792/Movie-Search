@@ -5,12 +5,19 @@ async function movie(){
     try{
         mList.innerHTML="";
         const MovieName=input.value.trim().toLowerCase();
+        if(!MovieName){
+            alert("Enter movie name first");
+        }
         const response=await fetch(`https://www.omdbapi.com/?s=${MovieName}&apikey=cbb546d7`);//t=moviename u ge exact movie details but s= u get the list of names
         if(!response.ok){
             throw new Error("Couldnt find the movie You were looking for");
         }
+
         const data=await response.json();
         console.log(data);
+        if(data.Response==="False"){
+            mList.innerHTML=`<p style='color:white;'>${data.Error}</p>`;
+        }
         lenItems=data.Search.length;
         console.log(lenItems);//got the no of results
         mList.style.cssText="display:flex; gap:20px;flex-wrap:wrap; padding:20px;";//wrap to allow movies to fill many lines instead of all in one
