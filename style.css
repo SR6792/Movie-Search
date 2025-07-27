@@ -50,3 +50,19 @@ body{
     justify-content: center;
 }
          
+@media screen and (max-width: 720px) {
+  .card {
+    width: 90%;
+    height: auto;
+  }
+  .inp {
+    width: 80%;
+  }
+  .btn-search {
+    width: 80%;
+  }
+  .moviesList {
+    flex-direction: column;
+    align-items: center;
+  }
+}
