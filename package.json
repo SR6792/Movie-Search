@@ -1,0 +1,16 @@
+{
+  "name": "movie-search-ssr",
+  "version": "1.0.0",
+  "description": "A beautiful server-side rendered Movie Search app with user authentication",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3"
+  }
+}

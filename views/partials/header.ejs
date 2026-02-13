@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Movie Search - Discover and explore movies with a beautiful, fast server-rendered experience.">
+    <title>
+        <%= typeof pageTitle !=='undefined' ? pageTitle : 'Movie Search' %>
+    </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <span class="logo-icon">🎬</span>
+                <span class="logo-text">MovieSearch</span>
+            </a>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <% if (user) { %>
+                    <a href="/profile" class="nav-link">Profile</a>
+                    <div class="nav-user">
+                        <div class="user-avatar">
+                            <%= user.name.charAt(0).toUpperCase() %>
+                        </div>
+                        <span class="user-name">
+                            <%= user.name %>
+                        </span>
+                    </div>
+                    <a href="/logout" class="nav-link btn-logout">Logout</a>
+                    <% } else { %>
+                        <a href="/login" class="nav-link btn-login">Sign In</a>
+                        <a href="/register" class="nav-link btn-register">Sign Up</a>
+                        <% } %>
+            </div>
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="/" class="mobile-link">Home</a>
+        <% if (user) { %>
+            <a href="/profile" class="mobile-link">Profile</a>
+            <a href="/logout" class="mobile-link">Logout</a>
+            <% } else { %>
+                <a href="/login" class="mobile-link">Sign In</a>
+                <a href="/register" class="mobile-link">Sign Up</a>
+                <% } %>
+    </div>

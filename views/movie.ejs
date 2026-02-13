@@ -1,0 +1,142 @@
+<%- include('partials/header', { pageTitle: movie.Title + ' — MovieSearch' }) %>
+
+    <main class="main">
+        <section class="movie-detail">
+            <div class="movie-detail-bg"
+                style="background-image: url('<%= movie.Poster !== 'N/A' ? movie.Poster : '' %>')"></div>
+            <div class="container">
+                <a href="javascript:history.back()" class="back-btn">← Back to results</a>
+                <div class="movie-detail-card">
+                    <div class="movie-detail-poster">
+                        <% if (movie.Poster !=='N/A' ) { %>
+                            <img src="<%= movie.Poster %>" alt="<%= movie.Title %>">
+                            <% } else { %>
+                                <div class="movie-poster-placeholder large">
+                                    <span>🎬</span>
+                                </div>
+                                <% } %>
+                    </div>
+                    <div class="movie-detail-info">
+                        <h1 class="movie-detail-title">
+                            <%= movie.Title %>
+                        </h1>
+                        <div class="movie-detail-meta">
+                            <span class="badge">
+                                <%= movie.Year %>
+                            </span>
+                            <span class="badge">
+                                <%= movie.Rated %>
+                            </span>
+                            <span class="badge">
+                                <%= movie.Runtime %>
+                            </span>
+                        </div>
+                        <div class="movie-genre-tags">
+                            <% if (movie.Genre) { movie.Genre.split(', ').forEach(g => { %>
+                            <span class="genre-tag"><%= g %></span>
+                        <% }) } %>
+                    </div>
+                    
+                    <div class="movie-ratings">
+                        <% if (movie.imdbRating && movie.imdbRating !== ' N/A') { %>
+                                <div class="rating-item">
+                                    <span class="rating-label">⭐ IMDb</span>
+                                    <span class="rating-value">
+                                        <%= movie.imdbRating %>/10
+                                    </span>
+                                </div>
+                                <% } %>
+                                    <% if (movie.Ratings) { movie.Ratings.forEach(r=> { %>
+                                        <% if (r.Source==='Rotten Tomatoes' ) { %>
+                                            <div class="rating-item">
+                                                <span class="rating-label">🍅 Rotten Tomatoes</span>
+                                                <span class="rating-value">
+                                                    <%= r.Value %>
+                                                </span>
+                                            </div>
+                                            <% } %>
+                                                <% }) } %>
+                                                    <% if (movie.Metascore && movie.Metascore !=='N/A' ) { %>
+                                                        <div class="rating-item">
+                                                            <span class="rating-label">🎯 Metascore</span>
+                                                            <span class="rating-value">
+                                                                <%= movie.Metascore %>/100
+                                                            </span>
+                                                        </div>
+                                                        <% } %>
+                        </div>
+
+                        <div class="movie-detail-section">
+                            <h3>Plot</h3>
+                            <p>
+                                <%= movie.Plot %>
+                            </p>
+                        </div>
+
+                        <div class="movie-detail-grid">
+                            <% if (movie.Director && movie.Director !=='N/A' ) { %>
+                                <div class="detail-item">
+                                    <span class="detail-label">Director</span>
+                                    <span class="detail-value">
+                                        <%= movie.Director %>
+                                    </span>
+                                </div>
+                                <% } %>
+                                    <% if (movie.Writer && movie.Writer !=='N/A' ) { %>
+                                        <div class="detail-item">
+                                            <span class="detail-label">Writer</span>
+                                            <span class="detail-value">
+                                                <%= movie.Writer %>
+                                            </span>
+                                        </div>
+                                        <% } %>
+                                            <% if (movie.Actors && movie.Actors !=='N/A' ) { %>
+                                                <div class="detail-item">
+                                                    <span class="detail-label">Actors</span>
+                                                    <span class="detail-value">
+                                                        <%= movie.Actors %>
+                                                    </span>
+                                                </div>
+                                                <% } %>
+                                                    <% if (movie.Language && movie.Language !=='N/A' ) { %>
+                                                        <div class="detail-item">
+                                                            <span class="detail-label">Language</span>
+                                                            <span class="detail-value">
+                                                                <%= movie.Language %>
+                                                            </span>
+                                                        </div>
+                                                        <% } %>
+                                                            <% if (movie.Country && movie.Country !=='N/A' ) { %>
+                                                                <div class="detail-item">
+                                                                    <span class="detail-label">Country</span>
+                                                                    <span class="detail-value">
+                                                                        <%= movie.Country %>
+                                                                    </span>
+                                                                </div>
+                                                                <% } %>
+                                                                    <% if (movie.Awards && movie.Awards !=='N/A' ) { %>
+                                                                        <div class="detail-item">
+                                                                            <span class="detail-label">Awards</span>
+                                                                            <span class="detail-value">
+                                                                                <%= movie.Awards %>
+                                                                            </span>
+                                                                        </div>
+                                                                        <% } %>
+                                                                            <% if (movie.BoxOffice && movie.BoxOffice
+                                                                                !=='N/A' ) { %>
+                                                                                <div class="detail-item">
+                                                                                    <span class="detail-label">Box
+                                                                                        Office</span>
+                                                                                    <span class="detail-value">
+                                                                                        <%= movie.BoxOffice %>
+                                                                                    </span>
+                                                                                </div>
+                                                                                <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <%- include('partials/footer') %>

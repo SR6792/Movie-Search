@@ -1,0 +1,111 @@
+<%- include('partials/header', { pageTitle: 'MovieSearch — Discover Movies' }) %>
+
+    <main class="main">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-bg"></div>
+            <div class="hero-content">
+                <% if (user) { %>
+                    <h1 class="hero-title">Welcome back, <span class="gradient-text">
+                            <%= user.name %>
+                        </span> 👋</h1>
+                    <p class="hero-subtitle">What movie are you in the mood for today?</p>
+                    <% } else { %>
+                        <h1 class="hero-title">Discover Your Next <span class="gradient-text">Favorite Movie</span></h1>
+                        <p class="hero-subtitle">Search through thousands of movies. Sign in to save your favorites.</p>
+                        <% } %>
+
+                            <form class="search-form" action="/" method="get">
+                                <div class="search-box">
+                                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <path d="m21 21-4.35-4.35"></path>
+                                    </svg>
+                                    <input type="text" name="q" value="<%= query %>" placeholder="Search for movies..."
+                                        class="search-input" autofocus>
+                                    <button type="submit" class="search-btn">Search</button>
+                                </div>
+                            </form>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <% if (query) { %>
+            <section class="results-section">
+                <div class="container">
+                    <% if (searchError) { %>
+                        <div class="error-card">
+                            <span class="error-icon">😕</span>
+                            <h2>Oops!</h2>
+                            <p>
+                                <%= searchError %>
+                            </p>
+                        </div>
+                        <% } else if (movies.length> 0) { %>
+                            <h2 class="section-title">Results for "<span class="gradient-text">
+                                    <%= query %>
+                                </span>"</h2>
+                            <div class="movies-grid">
+                                <% movies.forEach((movie, index)=> { %>
+                                    <a href="/movie/<%= movie.imdbID %>" class="movie-card"
+                                        style="animation-delay: <%= index * 0.05 %>s">
+                                        <div class="movie-poster-wrap">
+                                            <% if (movie.Poster !=='N/A' ) { %>
+                                                <img src="<%= movie.Poster %>" alt="<%= movie.Title %>"
+                                                    class="movie-poster" loading="lazy">
+                                                <% } else { %>
+                                                    <div class="movie-poster-placeholder">
+                                                        <span>🎬</span>
+                                                    </div>
+                                                    <% } %>
+                                                        <div class="movie-overlay">
+                                                            <span class="view-details">View Details →</span>
+                                                        </div>
+                                        </div>
+                                        <div class="movie-info">
+                                            <h3 class="movie-title">
+                                                <%= movie.Title %>
+                                            </h3>
+                                            <div class="movie-meta">
+                                                <span class="movie-year">
+                                                    <%= movie.Year %>
+                                                </span>
+                                                <span class="movie-type">
+                                                    <%= movie.Type %>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <% }) %>
+                            </div>
+                            <% } %>
+                </div>
+            </section>
+            <% } else { %>
+                <!-- Trending / CTA when no search -->
+                <section class="cta-section">
+                    <div class="container">
+                        <div class="cta-grid">
+                            <div class="cta-card">
+                                <span class="cta-icon">🔍</span>
+                                <h3>Search Movies</h3>
+                                <p>Find any movie from a massive database powered by OMDB</p>
+                            </div>
+                            <div class="cta-card">
+                                <span class="cta-icon">📋</span>
+                                <h3>Full Details</h3>
+                                <p>Get cast, plot, ratings, and more for every movie</p>
+                            </div>
+                            <div class="cta-card">
+                                <span class="cta-icon">⚡</span>
+                                <h3>Lightning Fast</h3>
+                                <p>Server-side rendered for instant page loads</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <% } %>
+    </main>
+
+    <%- include('partials/footer') %>

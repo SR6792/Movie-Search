@@ -1,0 +1,54 @@
+<%- include('partials/header', { pageTitle: 'My Profile — MovieSearch' }) %>
+
+    <main class="main auth-page">
+        <div class="auth-container">
+            <div class="profile-card">
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <%= user.name.charAt(0).toUpperCase() %>
+                    </div>
+                    <h1>
+                        <%= user.name %>
+                    </h1>
+                    <p class="profile-email">
+                        <%= user.email %>
+                    </p>
+                </div>
+                <div class="profile-body">
+                    <div class="profile-info-grid">
+                        <div class="profile-info-item">
+                            <span class="profile-info-label">👤 Full Name</span>
+                            <span class="profile-info-value">
+                                <%= user.name %>
+                            </span>
+                        </div>
+                        <div class="profile-info-item">
+                            <span class="profile-info-label">📧 Email</span>
+                            <span class="profile-info-value">
+                                <%= user.email %>
+                            </span>
+                        </div>
+                        <div class="profile-info-item">
+                            <span class="profile-info-label">📅 Member Since</span>
+                            <span class="profile-info-value">
+                                <%= new Date(user.createdAt).toLocaleDateString('en-US', { year: 'numeric' ,
+                                    month: 'long' , day: 'numeric' }) %>
+                            </span>
+                        </div>
+                        <div class="profile-info-item">
+                            <span class="profile-info-label">🔑 User ID</span>
+                            <span class="profile-info-value id-value">
+                                <%= user.id %>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="profile-actions">
+                        <a href="/" class="btn-submit">🎬 Search Movies</a>
+                        <a href="/logout" class="btn-logout-full">Sign Out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <%- include('partials/footer') %>
